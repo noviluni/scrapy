@@ -14,7 +14,8 @@ from scrapy.responsetypes import responsetypes
 def _parsed_url_args(parsed):
     # Assume parsed is urlparse-d from Request.url,
     # which was passed via safe_url_string and is ascii-only.
-    b = lambda s: to_bytes(s, encoding='ascii')
+    def b(s):
+        return to_bytes(s, encoding='ascii')
     path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))
     path = b(path)
     host = b(parsed.hostname)

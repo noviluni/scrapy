@@ -219,8 +219,9 @@ class CsvItemExporterTest(BaseItemExporterTest):
     def assertCsvEqual(self, first, second, msg=None):
         first = to_unicode(first)
         second = to_unicode(second)
-        csvsplit = lambda csv: [sorted(re.split(r'(,|\s+)', line))
-                                for line in csv.splitlines(True)]
+
+        def csvsplit(csv):
+            return [sorted(re.split(r'(,|\s+)', line)) for line in csv.splitlines(True)]
         return self.assertEqual(csvsplit(first), csvsplit(second), msg)
 
     def _check_output(self):

@@ -203,8 +203,13 @@ class MediaPipelineTestCase(BaseMediaPipelineTestCase):
 
     @inlineCallbacks
     def test_result_succeed(self):
-        cb = lambda _: self.pipe._mockcalled.append('request_callback') or _
-        eb = lambda _: self.pipe._mockcalled.append('request_errback') or _
+
+        def cb(_):
+            return self.pipe._mockcalled.append('request_callback') or _
+
+        def eb(_):
+            return self.pipe._mockcalled.append('request_errback') or _
+
         rsp = Response('http://url1')
         req = Request('http://url1', meta=dict(response=rsp), callback=cb, errback=eb)
         item = dict(requests=req)
@@ -217,8 +222,12 @@ class MediaPipelineTestCase(BaseMediaPipelineTestCase):
     @inlineCallbacks
     def test_result_failure(self):
         self.pipe.LOG_FAILED_RESULTS = False
-        cb = lambda _: self.pipe._mockcalled.append('request_callback') or _
-        eb = lambda _: self.pipe._mockcalled.append('request_errback') or _
+
+        def cb(_):
+            return self.pipe._mockcalled.append('request_callback') or _
+
+        def eb(_):
+            return self.pipe._mockcalled.append('request_errback') or _
         fail = Failure(Exception())
         req = Request('http://url1', meta=dict(response=fail), callback=cb, errback=eb)
         item = dict(requests=req)
