@@ -1,5 +1,5 @@
 from time import time
-from six.moves.urllib.parse import urlparse, urlunparse, urldefrag
+from urllib.parse import urlparse, urlunparse, urldefrag
 
 from twisted.web.client import HTTPClientFactory
 from twisted.web.http import HTTPClient
@@ -43,7 +43,7 @@ class ScrapyHTTPPageGetter(HTTPClient):
     delimiter = b'\n'
 
     def connectionMade(self):
-        self.headers = Headers() # bucket for response headers
+        self.headers = Headers()  # bucket for response headers
 
         # Method command
         self.sendCommand(self.factory.method, self.factory.path)

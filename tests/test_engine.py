@@ -10,9 +10,10 @@ module with the ``runserver`` argument::
     python test_engine.py runserver
 """
 
-from __future__ import print_function
-import sys, os, re
-from six.moves.urllib.parse import urlparse
+import os
+import re
+import sys
+from urllib.parse import urlparse
 
 from twisted.internet import reactor, defer
 from twisted.web import server, static, util
@@ -270,7 +271,6 @@ class EngineTest(unittest.TestCase):
                          self.run.signals_catched[signals.spider_opened])
         self.assertEqual({'spider': self.run.spider},
                          self.run.signals_catched[signals.spider_idle])
-        self.run.signals_catched[signals.spider_closed].pop('spider_stats', None) # XXX: remove for scrapy 0.17
         self.assertEqual({'spider': self.run.spider, 'reason': 'finished'},
                          self.run.signals_catched[signals.spider_closed])
 
